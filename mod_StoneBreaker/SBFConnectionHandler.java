@@ -38,35 +38,26 @@ public class SBFConnectionHandler implements IConnectionHandler {
 	@Override
 	public String connectionReceived(NetLoginHandler netHandler,
 			NetworkManager manager) {
-		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
 
 	@Override
 	public void connectionOpened(NetHandler netClientHandler, String server,
 			int port, NetworkManager manager) {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 	@Override
 	public void connectionOpened(NetHandler netClientHandler,
 			MinecraftServer server, NetworkManager manager) {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 	@Override
 	public void connectionClosed(NetworkManager manager) {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 	@Override
 	public void clientLoggedIn(NetHandler clientHandler,
 			NetworkManager manager, Packet1Login login) {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 }
