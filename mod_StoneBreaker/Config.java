@@ -15,8 +15,8 @@ public class Config {
 	public Set<String> target = new LinkedHashSet();
 	public Set<String> tool = new LinkedHashSet();
 	public Mode mode = Mode.off;
-	boolean drop_here = true;
-	boolean add_target_permission = true;
+	public boolean drop_here = true;
+	public boolean add_target_permission = true;
 	public int limit = 0;
 
 	public Set<Class> getTools() {
