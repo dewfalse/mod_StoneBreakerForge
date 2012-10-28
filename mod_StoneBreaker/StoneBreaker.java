@@ -71,6 +71,11 @@ public class StoneBreaker {
 		limit.comment = "Limit number of break at once";
 		config.limit = limit.getInt();
 
+		Property add_target = cfg.get(Configuration.CATEGORY_GENERAL,
+				"add_target_flg", true);
+		add_target.comment = "Add/Remove targets in game(Register Key)";
+		config.add_target_permission = add_target.getBoolean(true);
+
 		cfg.save();
 
 		Property debug = cfg.get(Configuration.CATEGORY_GENERAL,
