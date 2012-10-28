@@ -16,6 +16,7 @@ public class ServerProxy extends CommonProxy {
 		if(FMLServerHandler.instance().getServer() == null) {
 			return;
 		}
+
 		if(FMLServerHandler.instance().getServer().getCommandManager() instanceof ServerCommandManager) {
 			ServerCommandManager manager = (ServerCommandManager)FMLServerHandler.instance().getServer().getCommandManager();
 			manager.registerCommand(new CommandTarget());
