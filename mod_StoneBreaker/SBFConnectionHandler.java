@@ -2,7 +2,7 @@ package mod_StoneBreaker;
 
 import java.io.IOException;
 
-import mod_TreeBreaker.EnumPacketType;
+import mod_StoneBreaker.EnumPacketType;
 import mod_StoneBreaker.StoneBreaker;
 import mod_StoneBreaker.Util;
 import net.minecraft.server.MinecraftServer;
