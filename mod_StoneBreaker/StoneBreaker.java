@@ -57,7 +57,7 @@ public class StoneBreaker {
 		String additionalTools = tools.value;
 
 		Property target = cfg.get(Configuration.CATEGORY_GENERAL,
-				"TargetBlockID", "");
+				"TargetBlockID", "14,15,16,21,56,73,74,129");
 		target.comment = "Additional block IDs, separate by ','";
 		String additionalTargets = target.value;
 
@@ -79,14 +79,15 @@ public class StoneBreaker {
 		cfg.save();
 
 		Property debug = cfg.get(Configuration.CATEGORY_GENERAL,
-				"debug", true);
-		Util.debug = debug.getBoolean(true);
+				"debug", false);
+		Util.debug = debug.getBoolean(false);
 
 
 		for (String token : additionalTools.split(",")) {
 			if (token.trim().isEmpty()) {
 				continue;
 			}
+
 			config.tool.add(token.trim());
 		}
 
