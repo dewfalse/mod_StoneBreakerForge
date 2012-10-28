@@ -10,12 +10,13 @@ import net.minecraft.src.Item;
 public class Config {
 	public static String channel = "sbf";
 
-	enum Mode { off, line, tunnel, upstair, downstair, upper, under, horizontal, vertical, all};
+	public enum Mode { off, line, tunnel, upstair, downstair, upper, under, horizontal, vertical, all};
 
 	public Set<String> target = new LinkedHashSet();
 	public Set<String> tool = new LinkedHashSet();
 	public Mode mode = Mode.off;
 	boolean drop_here = true;
+	boolean add_target_permission = true;
 	public int limit = 0;
 
 	public Set<Class> getTools() {
@@ -36,10 +37,6 @@ public class Config {
 			}
 		}
 		return ret;
-	}
-
-	public void ToggleMode() {
-		mode = Mode.values()[(mode.ordinal() + 1) % Mode.values().length];
 	}
 
 	public Set<Integer> getTarget() {
@@ -142,6 +139,31 @@ public class Config {
 				}
 			} catch(ClassNotFoundException e) {
 			}
+		}
+	}
+
+	public void ToggleMode() {
+		mode = Mode.values()[(mode.ordinal() + 1) % Mode.values().length];
+	}
+
+	void setTarget(String additionalWoods) {
+		target.clear();
+		target.add(Block.wood.getClass().getName());
+		for (String token : additionalWoods.split(",")) {
+			if (token.trim().isEmpty()) {
+				continue;
+			}
+			target.add(token.trim());
+		}
+	}
+
+	void setTool(String additionalTools) {
+		tool.clear();
+		for (String token : additionalTools.split(",")) {
+			if (token.trim().isEmpty()) {
+				continue;
+			}
+			tool.add(token.trim());
 		}
 	}
 }
