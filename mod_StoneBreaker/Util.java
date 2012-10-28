@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import mod_StoneBreaker.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.EntityPlayerMP;
@@ -104,4 +105,25 @@ public class Util {
 		return -1;
 	}
 
+	public static void sendPacket(int type, String[] strings, int[] is) throws IOException {
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		DataOutputStream stream = new DataOutputStream(bytes);
+
+		stream.writeInt(type);
+		stream.writeInt(strings.length);
+		for(String s : strings) {
+			stream.writeUTF(s);
+
+		}
+		stream.writeInt(is.length);
+		for(int i : is) {
+			stream.writeInt(i);
+		}
+
+	    Packet250CustomPayload packet = new Packet250CustomPayload();
+	    packet.channel = Config.channel;
+	    packet.data = bytes.toByteArray();
+	    packet.length = packet.data.length;
+	    ModLoader.sendPacket(packet);
+	}
 }
