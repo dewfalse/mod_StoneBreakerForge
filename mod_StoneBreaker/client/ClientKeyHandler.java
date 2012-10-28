@@ -35,8 +35,6 @@ public class ClientKeyHandler extends KeyHandler {
 	@Override
 	public void keyDown(EnumSet<TickType> types, KeyBinding kb,
 			boolean tickEnd, boolean isRepeat) {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 	@Override
@@ -44,9 +42,13 @@ public class ClientKeyHandler extends KeyHandler {
 		if(tickEnd) {
 			if(kb == modeBinding) {
 				StoneBreaker.config.ToggleMode();
-				Util.debugPrintChatMessage("StoneBreaker Mode: " + StoneBreaker.config.mode.toString());
+				Util.printChatMessage("StoneBreaker Mode: " + StoneBreaker.config.mode.toString());
 			}
 			if(kb == registerBinding) {
+				if(StoneBreaker.config.add_target_permission == false) {
+					return;
+				}
+
 				Minecraft mc = ModLoader.getMinecraftInstance();
 
 				if (mc.objectMouseOver == null) {
@@ -72,13 +74,13 @@ public class ClientKeyHandler extends KeyHandler {
 					Set<Integer> targets = StoneBreaker.config.getTarget();
 					if(targets.contains(blockId)) {
 						StoneBreaker.config.removeTarget(blockId);
-						Util.debugPrintChatMessage("StoneBreaker Target Remove: " + name);
+						Util.printChatMessage("StoneBreaker Target Remove: " + name);
 					}
 					else {
 						StoneBreaker.config.target.add(String.valueOf(blockId));
-						Util.debugPrintChatMessage("StoneBreaker Target Add: " + name);
+						Util.printChatMessage("StoneBreaker Target Add: " + name + "(" + String.valueOf(blockId) + ")");
 					}
-					Util.debugPrintChatMessage("StoneBreaker Targets: " + StoneBreaker.config.getTargetNames().toString());
+					Util.printChatMessage("StoneBreaker Targets: " + StoneBreaker.config.getTargetNames().toString());
 				}
 			}
 		}
