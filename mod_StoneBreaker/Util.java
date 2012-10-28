@@ -23,7 +23,7 @@ import cpw.mods.fml.server.FMLServerHandler;
 public class Util {
 	private static boolean bObfuscate = false;
 
-	public static boolean debug = true;
+	public static boolean debug = false;
 
 	public static Object[] getServerWorldAndPlayer(String var0) {
 		MinecraftServer server = FMLCommonHandler.instance()
@@ -42,7 +42,23 @@ public class Util {
 		}
 	}
 
+	public static void printChatMessage(String str) {
+		ModLoader.getMinecraftInstance().ingameGUI.getChatGUI()
+				.printChatMessage(str);
+	}
+
 	public static void sendPacketToPlayer(Player player, int type, String[] stringData, int[] integerData) throws IOException {
+		Packet250CustomPayload packet = buildPacket(type, stringData, integerData);
+		PacketDispatcher.sendPacketToPlayer(packet, player);
+	}
+
+	public static void sendPacketToAllPlayers(int type, String[] stringData, int[] integerData) throws IOException {
+		Packet250CustomPayload packet = buildPacket(type, stringData, integerData);
+		PacketDispatcher.sendPacketToAllPlayers(packet);
+	}
+
+	public static Packet250CustomPayload buildPacket(int type,
+			String[] stringData, int[] integerData) throws IOException {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream stream = new DataOutputStream(bytes);
 
@@ -61,14 +77,14 @@ public class Util {
 	    packet.channel = Config.channel;
 	    packet.data = bytes.toByteArray();
 	    packet.length = packet.data.length;
-		PacketDispatcher.sendPacketToPlayer(packet, player);
+		return packet;
 	}
 
 	public static void consoleLog(String str) {
 		MinecraftServer.logger.info(str);
 	}
 
-	public int getBlockHitWait() {
+	public static int getBlockHitWait() {
 		int blockHitWait = 0;
 		Minecraft mc = ModLoader.getMinecraftInstance();
 
