@@ -1,8 +1,11 @@
 package mod_StoneBreaker.server;
 
+import java.io.IOException;
 import java.util.List;
 
 import mod_StoneBreaker.StoneBreaker;
+import mod_StoneBreaker.EnumPacketType;
+import mod_StoneBreaker.Util;
 import net.minecraft.src.Block;
 import net.minecraft.src.CommandBase;
 import net.minecraft.src.ICommandSender;
@@ -31,6 +34,7 @@ public class CommandTarget extends CommandBase {
 					StoneBreaker.config.removeTarget(i);
 					notifyAdmins(par1ICommandSender, "commands.StoneBreaker.Target.Removed " + s,
 							new Object[] { s });
+					notifyConfigToAllPlayers();
 					return;
 				} catch(NumberFormatException e) {
 				}
@@ -48,6 +52,7 @@ public class CommandTarget extends CommandBase {
 							StoneBreaker.config.removeTarget(b.blockID);
 							notifyAdmins(par1ICommandSender, "commands.StoneBreaker.Target.Removed " + s,
 									new Object[] { s });
+							notifyConfigToAllPlayers();
 							break;
 						}
 					}
@@ -60,11 +65,30 @@ public class CommandTarget extends CommandBase {
 				StoneBreaker.config.target.add(s);
 				notifyAdmins(par1ICommandSender, "commands.StoneBreaker.Target.Added " + s,
 						new Object[] { s });
+				notifyConfigToAllPlayers();
 				return;
 			}
 		}
 
 		throw new WrongUsageException("command.StoneBreaker.Target", new Object[0]);
+	}
+
+	private void notifyConfigToAllPlayers() {
+		try {
+			String target = "";
+			for(int i : StoneBreaker.config.getTarget()) {
+				target += String.valueOf(i);
+				target += ",";
+			}
+			String tool = "";
+			for(Class c : StoneBreaker.config.getTools()) {
+				tool += c.toString();
+				tool += ",";
+			}
+			Util.sendPacketToAllPlayers(EnumPacketType.config.ordinal(), new String[]{target, tool}, new int[]{StoneBreaker.config.limit, StoneBreaker.config.add_target_permission ? 1 : 0});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
     public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
